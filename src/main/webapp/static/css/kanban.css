@@ -1,9 +1,13 @@
+* {
+	background-color: transparent;
+}
+
 html,body {
 	height: 100%;
 }
 
 body {
-	background-color: #FFF;
+	background-color: #e8e8e8;
 	color: #666;
 	direction: ltr;
 	font-family: arial, sans-serif;
@@ -11,6 +15,49 @@ body {
 	margin: 0;
 	min-width: 800px;
 	padding: 0;
+	min-width: 800px;
+}
+
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+::-webkit-scrollbar-track {
+	background-clip: padding-box;
+	border: solid transparent;
+	border-width: 0 0 0 4px;
+}
+
+::-webkit-scrollbar-button {
+	height: 0;
+	width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, .2);
+	background-clip: padding-box;
+	border: solid transparent;
+	border-width: 1px 1px 1px 6px;
+	min-height: 28px;
+	padding: 100px 0 0;
+	box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0
+		rgba(0, 0, 0, .07);
+	display: none;
+}
+
+.water-flow-container:hover::-webkit-scrollbar-thumb{
+	display: block;
+}
+
+/*需要定义一个hover， 才能正确触发上面的滚动条样式*/
+.water-flow-container:hover{
+	background: transparent;
+}
+
+::-webkit-scrollbar {
+	height: 16px;
+	overflow: visible;
+	width: 16px;
 }
 
 /**取消chrome默认样式及 textarea 拖放大小*/
@@ -25,6 +72,7 @@ textarea {
 .kb-nav {
 	background: #f5f5f5;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	min-width: 300px;
 }
 
 .task-board {
@@ -37,30 +85,54 @@ textarea {
 }
 
 .task-board-layout {
-	position: absolute;
+	/* position: absolute; */
 	left: 0;
 	right: 0;
-	bottom: 0;
-	width: 100%;
+	bottom: 0px;
+	/* width: 100%; */
 	height: 100%;
 	border-collapse: collapse;
+	top: 52px;
 }
 
-.task-board-layout thead{
-	height : 50px;
+.task-board-layout tbody tr {
+	border-top: 1px solid #ccc;
 }
 
-.task-board-layout td,.task-board-layout th{
-	border:3px solid transparent;
+.task-board-layout thead tr {
+	border-bottom: 3px solid #ccc;
+}
+
+.task-board-layout thead {
 	height: 50px;
 }
 
-.task-board-layout-bg td,.task-board-layout-bg th{
-	border-color: #eee;
+.task-board-layout tbody {
+	overflow-y: hidden;
 }
 
-.task-board-layout-container{
-	
+.task-board-layout td,.task-board-layout th {
+	border-left: 1px solid #ccc;
+	height: 50px;
+	text-align: center;
+	font-size: 20px;
+	width: 50%;
+	min-width: 300px;
+}
+
+.task-board-layout td {
+	vertical-align: top;
+}
+
+.task-board-layout td:FIRST-CHILD,.task-board-layout th:FIRST-CHILD {
+	border-left: 0;
+}
+
+.water-flow-container {
+	margin: 20px;
+	position: static;
+	height: 100%;
+	overflow-y: auto;
 }
 
 .kb-create-controll {
@@ -76,6 +148,7 @@ textarea {
 	margin: 5px;
 	width: 600px;
 }
+
 
 .kb-task-title {
 	padding: 15px;
@@ -125,6 +198,9 @@ textarea {
 	margin: 8px;
 	min-height: 150px;
 	background-color: #FFF;
+	width : 240px;
+	
+	display: inline-block;
 }
 
 .culomn {

@@ -1,43 +1,20 @@
 $(function(){
-//        var culomns = $('.culomn');
-//        var cards = $('.card');
-//        cards.each(function(i,o){
-//            $(o).height(Math.random()*200 + 200);
-//            $(o).text(i);
-//            console.info(o);
-//            var min = 9999999999;
-//            var minc = $(culomns[0]);
-//            culomns.each(function(i2, c ){
-//                
-//                if(min > $(c).height()){
-//                    min = $(c).height();
-//                    minc  = $(c);
-//                }
-//                console.info(min);
-//            });
-//
-//            minc.append($(o));
-//        });
     
-    var Menu = Backbone.View.extend({
-        el : '#menu',
-        events : {
-            'click': 'hide',
-            'click a' : function(e){console.info(e);} 
-        },
-        show : function(){
-            this.$el.fadeIn();
-        },
-        hide : function(){
-            this.$el.fadeOut();
-            return false;
-        }
-    });
-    var menu = new Menu();
-    
-    var Body = Backbone.View.extend({
-        el : 'body'
-    });
-    
-    new Body();
+	var WaterFlowView = Backbone.View.extend({
+		className : 'water-flow-container',
+		initialize : function(){
+			this.$el.html('hello world');
+			console.info(this.$el);
+		},
+		events : {
+			'click' : 'onClick'
+		},
+		onClick : function(){
+			console.info('click');
+			this.$el.html(new Date().toString());
+		}
+	}); 
+	
+	new WaterFlowView();
+	
 });
