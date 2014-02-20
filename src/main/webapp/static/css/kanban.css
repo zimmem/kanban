@@ -13,7 +13,6 @@ body {
 	font-family: arial, sans-serif;
 	font-size: 14px;
 	margin: 0;
-	min-width: 800px;
 	padding: 0;
 	min-width: 800px;
 }
@@ -45,12 +44,11 @@ body {
 	display: none;
 }
 
-.water-flow-container:hover::-webkit-scrollbar-thumb{
+.water-flow-container:hover::-webkit-scrollbar-thumb {
 	display: block;
 }
 
-/*需要定义一个hover， 才能正确触发上面的滚动条样式*/
-.water-flow-container:hover{
+.water-flow-container:hover {
 	background: transparent;
 }
 
@@ -89,7 +87,7 @@ textarea {
 	left: 0;
 	right: 0;
 	bottom: 0px;
-	/* width: 100%; */
+	width: 100%;
 	height: 100%;
 	border-collapse: collapse;
 	top: 52px;
@@ -118,6 +116,7 @@ textarea {
 	font-size: 20px;
 	width: 50%;
 	min-width: 300px;
+	position: relative;
 }
 
 .task-board-layout td {
@@ -130,9 +129,14 @@ textarea {
 
 .water-flow-container {
 	margin: 20px;
-	position: static;
+	position: absolute;
 	height: 100%;
 	overflow-y: auto;
+	padding-bottom: 40px;
+	left: 0px;
+	right: 0;
+	top: 0;
+	bottom: 0;
 }
 
 .kb-create-controll {
@@ -145,20 +149,56 @@ textarea {
 .kb-create-controll input,textarea {
 	border-width: 0;
 	display: inline-block;;
-	margin: 5px;
+	margin: 0px;
 	width: 600px;
 }
 
+.kb-task-card  input,.kb-task-card  textarea {
+	border-width: 0;
+	display: inline-block;;
+	margin: 0px;
+	width: 240px;
+}
 
 .kb-task-title {
-	padding: 15px;
-	font-weight: bold;
+	box-sizing: border-box;
+	background-color: transparent;
+	color: rgba(0, 0, 0, 0.8);
+	font-family: 'Roboto Slab', 'Times New Roman', serif;
 	font-size: 17px;
+	font-weight: bold;
+	border: 0px;
+	padding: 15px 15px 0 15px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .kb-task-detail {
 	padding: 15px;
 	font-size: 14px;
+}
+
+.kb-task-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	/* display: none; */
+}
+
+.kb-task-toolbar {
+	visibility: hidden;
+}
+
+.kb-task-card:hover .kb-task-toolbar {
+	visibility: visible;
+}
+
+.kb-task-toolbar .glyphicon {
+	font-size: 16px;
 }
 
 .kb-board {
@@ -189,6 +229,7 @@ textarea {
 	background: transparent;
 }
 
+}
 .kb-lane-contain {
 	height: 100%;
 }
@@ -198,9 +239,11 @@ textarea {
 	margin: 8px;
 	min-height: 150px;
 	background-color: #FFF;
-	width : 240px;
-	
+	width: 240px;
 	display: inline-block;
+	position: relative;
+	top: 0;
+	left: 0;
 }
 
 .culomn {

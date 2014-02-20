@@ -12,12 +12,13 @@
 		<div class="container">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Brand</a>
+				<ul class="nav navbar-nav hidden-xs">
+					<li class="active"><a href="#">Current</a></li>
+					<li class="active"><a href="#">All</a></li>
+					<li><a href="#">New</a></li>
+				</ul>
 			</div>
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Current</a></li>
-				<li class="active"><a href="#">All</a></li>
-				<li><a href="#">New</a></li>
-			</ul>
+
 		</div>
 	</header>
 	<div class="task-board">
@@ -31,7 +32,15 @@
 			<tbody>
 				<tr>
 					<td><div class="water-flow-container">
-							<div class="kb-task-card"></div>
+							<div class="kb-task-card">
+								<div class="kb-task-mask"></div>
+								<input type="text" class="kb-task-title"/>
+								<textarea class="kb-task-detail"></textarea>
+								<div class="kb-task-toolbar">
+									<span class="glyphicon glyphicon-trash"></span>
+									<span class="glyphicon glyphicon-ok"></span>
+								</div>
+							</div>
 							<div class="kb-task-card"></div>
 							<div class="kb-task-card"></div>
 							<div class="kb-task-card"></div>
