@@ -315,8 +315,12 @@ textarea {
 	visibility: visible;
 }
 
-.kb-task-toolbar .glyphicon {
+.kb-task-toolbar .tool-btn {
 	font-size: 16px;
+}
+
+.kb-task-toolbar .tool-btn:hover {
+	color: #000;
 }
 
 .kb-board {

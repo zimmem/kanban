@@ -13,7 +13,7 @@ import com.zimmem.kanban.dataobject.Task;
 import com.zimmem.kanban.repository.TaskRepository;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 public class TaskController {
 
 	@Autowired

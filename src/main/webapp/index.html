@@ -38,14 +38,14 @@
 									<input type="text" class="kb-task-title" />
 									<textarea class="kb-task-content"></textarea>
 									<div class="kb-task-toolbar">
-										<span class="glyphicon glyphicon-ok"></span> <span class="glyphicon glyphicon-play"></span>
-										<div class="glyphicon glyphicon-eye-open color-pick-btn">
+										<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play tool-btn"></span>
+										<div class="glyphicon glyphicon-eye-open color-pick-btn tool-btn">
 											<div class="color-picker">
 												<span class="color-option"></span>
 												<div class="color-option"></div>
 											</div>
 										</div>
-										<span class="glyphicon glyphicon-time"></span> <span class="glyphicon glyphicon-trash"></span>
+										<span class="glyphicon glyphicon-time tool-btn"></span> <span class="glyphicon glyphicon-trash tool-btn"></span>
 									</div>
 								</div>
 								<div class="kb-task-card"></div>
@@ -81,10 +81,10 @@
 	<div id="kb-create-controll" class="kb-create-controll">
 		<form >
 		<div class="kb-create-controll-wrapper">
-			<input class="kb-task-title" placeholder="Title"></input>
+			<input name="title" class="kb-task-title" placeholder="Title"></input>
 			<div class="kb-task-content-warpper">
 				<div id="task-content-clone" class="kb-task-content task-content-clone"></div>
-				<textarea class="kb-task-content" placeholder="content"></textarea>
+				<textarea name="content" class="kb-task-content" placeholder="content"></textarea>
 
 			</div>
 		</div>

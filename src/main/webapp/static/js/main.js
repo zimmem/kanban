@@ -2,13 +2,43 @@ $(function(){
     
 	var CARD_WIDTH = 256;
 	
+	$.fn.serializeObject = function()
+	{
+	    var o = {};
+	    var a = this.serializeArray();
+	    $.each(a, function() {
+	        if (o[this.name] !== undefined) {
+	            if (!o[this.name].push) {
+	                o[this.name] = [o[this.name]];
+	            }
+	            o[this.name].push(this.value || '');
+	        } else {
+	            o[this.name] = this.value || '';
+	        }
+	    });
+	    return o;
+	};
+	
 	
 	
 	var TaskModel = Backbone.Model.extend({
 		initialize : function(){ 
 			
 		},
-		url : '/task'
+		event : {
+			'change' : 'onChange'
+		},
+		urlRoot : '/tasks',
+		validate : function(attrs, options){
+			if(!attrs.title && !attrs.content){
+				return "task empty";
+			}
+		},
+		onChange : function(){
+			if(!this.isNew()){
+				this.save();
+			}
+		}
 	});
 	
 	var MaskLayer = Backbone.View.extend({
@@ -35,9 +65,6 @@ $(function(){
 			});
 		},
 		open : function(){
-			if(this.beforeOpen  ){
-				this.beforeOpen();
-			}
 			var parentWidth = this.$el.offsetParent().innerWidth();
 			var width = this.$el.outerWidth();
 			var left = (parentWidth - width) / 2;
@@ -46,6 +73,11 @@ $(function(){
 			this.$el.show();
 		},
 		close : function(){
+			
+			if(this.beforeClose){
+				this.beforeClose();
+			}
+			
 			this.$el.hide();
 			mask.hide();
 		}
@@ -56,9 +88,10 @@ $(function(){
 		el:'#kb-create-controll',
 		
 		events : {
-			'keyup textarea' : 'onContentChange'
+			'keyup textarea' : 'onContentChange',
+			'change form' : 'onChange'
 		},
-		initialize : function(){
+		initialize : function(option){
 			ModeDialog.prototype.initialize.apply(this);
 			this.contentText = this.$el.find('textarea.kb-task-content');
 			this.contentClone = this.$el.find('div.kb-task-content');
@@ -68,8 +101,8 @@ $(function(){
 			this.contentClone.text(this.contentText.val());
 			this.contentText.height( this.contentClone.height());
 		},
-		beforeOpen : function(){
-			debugger;
+		open : function(option){
+			
 			this.form[0].reset();
 			this.onContentChange();
 			var now = new Date();
@@ -77,6 +110,18 @@ $(function(){
 			var month = ("0" + (now.getMonth() + 1)).slice(-2);
 			var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			this.$el.find('.date-input').val(today);
+			this.task = (option && option.task) || new TaskModel();
+			
+			ModeDialog.prototype.open.apply(this);
+		},
+		onChange : function(e){
+			var obj = this.form.serializeObject();
+			this.task.set(obj);
+		},
+		beforeClose : function(){
+			if(this.task.isNew()){
+				this.task.save();
+			}
 		}
 	});
 	
@@ -89,7 +134,6 @@ $(function(){
 			var that = this;
 			$(window).resize(function(){
 				that.waterflow();
-				console.info('resize');
 			});
 			
 			var cards = this.$el.find('.kb-task-card');
@@ -112,7 +156,6 @@ $(function(){
 			
 			
 			var clumnCount = parseInt(this.$el.width() / CARD_WIDTH );
-			console.info(clumnCount);
 			var lastRowBottom = [0];
 			
 			var that = this;
@@ -124,7 +167,6 @@ $(function(){
 				if(i < clumnCount ){
 					//$card.offset({top : 0, left : i * $card.outerWidth(true)});
 					$card.css('-webkit-transform', 'translate('+ i * $card.outerWidth(true)+ 'px, 0px)');
-					console.info( i * $card.outerWidth(true) );
 					lastRowBottom[i] = $card.outerHeight(true);
 					maxHeight = maxHeight > lastRowBottom[i] ? maxHeight : lastRowBottom[i]; 
 					
