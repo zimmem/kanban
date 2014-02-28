@@ -17,8 +17,6 @@ body {
 	min-width: 800px;
 }
 
-
-
 ::-webkit-scrollbar-corner {
 	background: transparent;
 }
@@ -168,7 +166,7 @@ textarea {
 	width: 600px;
 }
 
-.time-picker-bar{
+.time-picker-bar {
 	padding-left: 16px;
 }
 
@@ -179,8 +177,9 @@ textarea {
 	padding-left: 6px;
 }
 
-.date-input::-webkit-inner-spin-button,.date-input::-webkit-clear-button {
-    display: none;
+.date-input::-webkit-inner-spin-button,.date-input::-webkit-clear-button
+	{
+	display: none;
 }
 
 .kb-task-card  input,.kb-task-card  textarea {
@@ -188,7 +187,6 @@ textarea {
 	display: inline-block;;
 	margin: 0px;
 	width: 240px;
-	
 }
 
 .kb-create-controll-wrapper {
@@ -369,6 +367,11 @@ textarea {
 	left: 0;
 	-webkit-transition-duration: 0.218s;
 	text-align: left;
+}
+
+.kb-task-day {
+	font-size: 12px;
+	font-style: italic;
 }
 
 .culomn {

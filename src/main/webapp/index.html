@@ -4,7 +4,7 @@
 <title>kanban</title>
 <meta charset="utf-8">
 <link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet">
-<link href="/static/css/kanban.css" rel="stylesheet" type="text/css" />
+<link href="http://localhost:8000/static/css/kanban.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -111,7 +111,8 @@
 			</div>
 		</div>
 		<span class="glyphicon glyphicon-time tool-btn"></span> <span class="glyphicon glyphicon-trash tool-btn"></span>
-</div>
+	</div>
+	<div class="kb-task-day"><%=beginTime%> ~ <%=deadline%></day>
 	</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="http://cdn.bootcss.com/underscore.js/1.6.0/underscore-min.js"></script>

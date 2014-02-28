@@ -145,44 +145,32 @@ $(function(){
 	});
 	
 	var createTaskDialog = new CreateTaskDialog({el:'#kb-create-controll'});
-	
+				
 	var WaterFlowView = Backbone.View.extend({
 		initialize : function(option){
-			
+			this.waterInfo = {clumnCount:0, lastRowBottom:[], maxHeight:0};
 			var url = option.tasksUrl;
 			var that = this;
 			$.get(url, function(data){
 				$.each(data, function(i, task){
 					that.addCard(new TaskCard({model:new TaskModel(task)}));
 				});
+				that.waterflow(true);
 			});
 			this.waterflow();
 			var that = this;
 			$(window).resize(function(){
 				that.waterflow();
 			});
-			
-			var cards = this.$el.find('.kb-task-card');
-			_.each(cards, function(card){
-				$(card).height(Math.random()*200 + 100);
-			});
 		},
 		events : {
 			
 		},
-		waterring : false,
-		waterInfo : {},
-		waterflow : function(){
-			
-			if(this.waterring){
-				return;
-			}
-			
-			this.waterring = true;
-			
+		waterflow : function(force){
 			
 			var clumnCount =  parseInt(this.$el.width() / CARD_WIDTH );
-			if(this.waterInfo.clumnCount === clumnCount){
+			//console.info(this.$el.attr('id') + ' ' + this.waterInfo.id + ' ' + this.waterInfo.clumnCount + ' ' + clumnCount);
+			if(!force && this.waterInfo.clumnCount === clumnCount){
 				return ;
 			}
 			this.waterInfo.clumnCount = clumnCount;
@@ -195,21 +183,18 @@ $(function(){
 			$.each(cards, function(i, card){
 				var $card = $(card);
 				if(i < that.waterInfo.clumnCount ){
-					//$card.offset({top : 0, left : i * $card.outerWidth(true)});
 					$card.css('-webkit-transform', 'translate('+ i * $card.outerWidth(true)+ 'px, 0px)');
 					that.waterInfo.lastRowBottom[i] = $card.outerHeight(true);
 					that.waterInfo.maxHeight = that.waterInfo.maxHeight > that.waterInfo.lastRowBottom[i] ? that.waterInfo.maxHeight : that.waterInfo.lastRowBottom[i]; 
 					
 				}else{
 					var shortestClumn = that.getShortestClumn(that.waterInfo.lastRowBottom);
-					//$card.offset({top : lastRowBottom[shortestClumn], left : shortestClumn * $card.outerWidth(true)});
 					$card.css('-webkit-transform', 'translate('+ shortestClumn * $card.outerWidth(true) +'px, '+ that.waterInfo.lastRowBottom[shortestClumn] +'px)');
 					that.waterInfo.lastRowBottom[shortestClumn] += $card.outerHeight(true);
 					that.waterInfo.maxHeight = that.waterInfo.maxHeight > that.waterInfo.lastRowBottom[shortestClumn] ? that.waterInfo.maxHeight : that.waterInfo.lastRowBottom[shortestClumn]; 
 				}
 			});
 			
-			this.waterring = false;
 		},
 		getShortestClumn : function(lastRowBottom){
 			var bottom = lastRowBottom[0];
@@ -223,7 +208,6 @@ $(function(){
 		},
 		addCard : function(card){
 			this.$el.append(card.$el);
-			this.waterflow();
 		}
 	}); 
 	
