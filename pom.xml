@@ -9,12 +9,19 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<appengine.target.version>1.8.9</appengine.target.version>
+		<appengine.target.version>1.9.0</appengine.target.version>
 		<spring.version>4.0.1.RELEASE</spring.version>
 		<appengine.app.version>1-war</appengine.app.version>
 	</properties>
 
 	<dependencies>
+		<!-- common -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
 		<!-- Compile/runtime dependencies -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>

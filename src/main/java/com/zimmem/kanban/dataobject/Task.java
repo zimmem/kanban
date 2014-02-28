@@ -8,10 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.zimmem.kanban.json.JsonDayDeserializer;
+import com.zimmem.kanban.json.JsonDaySerializer;
+
 @Entity
 public class Task implements Serializable {
 
 	private static final long serialVersionUID = -6320533212515270759L;
+	
+	public static enum Status{
+		waitting, processing, finished
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +34,13 @@ public class Task implements Serializable {
 
 	private String status;
 
-	private Date startTimeExpected;
+	@JsonSerialize(using = JsonDaySerializer.class)
+	@JsonDeserialize(using = JsonDayDeserializer.class)
+	private Date beginTime;
 
-	private Date deadlineTime;
+	@JsonSerialize(using = JsonDaySerializer.class)
+	@JsonDeserialize(using = JsonDayDeserializer.class)
+	private Date deadline;
 
 	private Date finishTime;
 
@@ -65,22 +78,6 @@ public class Task implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Date getStartTimeExpected() {
-		return startTimeExpected;
-	}
-
-	public void setStartTimeExpected(Date startTimeExpected) {
-		this.startTimeExpected = startTimeExpected;
-	}
-
-	public Date getDeadlineTime() {
-		return deadlineTime;
-	}
-
-	public void setDeadlineTime(Date deadlineTime) {
-		this.deadlineTime = deadlineTime;
-	}
-
 	public Date getFinishTime() {
 		return finishTime;
 	}
@@ -103,6 +100,22 @@ public class Task implements Serializable {
 
 	public void setBackgroundColor(String backgroundColor) {
 		this.backgroundColor = backgroundColor;
+	}
+
+	public Date getBeginTime() {
+		return beginTime;
+	}
+
+	public void setBeginTime(Date beginTime) {
+		this.beginTime = beginTime;
+	}
+
+	public Date getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
 	}
 
 }

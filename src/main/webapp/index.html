@@ -32,46 +32,42 @@
 			<tbody>
 				<tr>
 					<td style="position: relative;"><div id="waitting-lane" class="water-flow-container">
-							<div class="card-wrapper">
-								<div class="kb-task-card">
-									<div class="kb-task-mask"></div>
-									<input type="text" class="kb-task-title" />
-									<textarea class="kb-task-content"></textarea>
-									<div class="kb-task-toolbar">
-										<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play tool-btn"></span>
-										<div class="glyphicon glyphicon-eye-open color-pick-btn tool-btn">
-											<div class="color-picker">
-												<span class="color-option"></span>
-												<div class="color-option"></div>
-											</div>
+							<!-- <div class="kb-task-card">
+								<div class="kb-task-mask"></div>
+								<input type="text" class="kb-task-title" />
+								<textarea class="kb-task-content"></textarea>
+								<div class="kb-task-toolbar">
+									<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play tool-btn"></span>
+									<div class="glyphicon glyphicon-eye-open color-pick-btn tool-btn">
+										<div class="color-picker">
+											<span class="color-option"></span>
+											<div class="color-option"></div>
 										</div>
-										<span class="glyphicon glyphicon-time tool-btn"></span> <span class="glyphicon glyphicon-trash tool-btn"></span>
 									</div>
+									<span class="glyphicon glyphicon-time tool-btn"></span> <span class="glyphicon glyphicon-trash tool-btn"></span>
 								</div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
 							</div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div> -->
 						</div></td>
 					<td><div id="processing-lane" class="water-flow-container">
-							<div class="card-wrapper" style="position: relative;">
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-								<div class="kb-task-card"></div>
-							</div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
+							<div class="kb-task-card"></div>
 						</div></td>
 				</tr>
 			</tbody>
@@ -79,33 +75,48 @@
 		</table>
 	</div>
 	<div id="kb-create-controll" class="kb-create-controll">
-		<form >
-		<div class="kb-create-controll-wrapper">
-			<input name="title" class="kb-task-title" placeholder="Title"></input>
-			<div class="kb-task-content-warpper">
-				<div id="task-content-clone" class="kb-task-content task-content-clone"></div>
-				<textarea name="content" class="kb-task-content" placeholder="content"></textarea>
+		<form>
+			<div class="kb-create-controll-wrapper">
+				<input name="title" class="kb-task-title" placeholder="Title"></input>
+				<div class="kb-task-content-warpper">
+					<div id="task-content-clone" class="kb-task-content task-content-clone"></div>
+					<textarea name="content" class="kb-task-content" placeholder="content"></textarea>
 
-			</div>
-		</div>
-		<div class="time-picker-bar">
-			begin at <input name="beginTime" class="date-input" type="date"></input> and finish at <input name="deadline" class="date-input" type="date"></input>
-		</div>
-		<div class="kb-task-toolbar">
-			<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play  tool-btn"></span>
-			<div class="glyphicon glyphicon-eye-open  tool-btn color-pick-btn ">
-				<div class="color-picker">
-					<span class="color-option"></span>
-					<div class="color-option"></div>
 				</div>
 			</div>
-			<span class="glyphicon glyphicon-time  tool-btn"></span> <span class="glyphicon glyphicon-trash  tool-btn"></span>
-		</div>
+			<div class="time-picker-bar">
+				begin at <input name="beginTime" class="date-input" type="date"></input> and finish at <input name="deadline" class="date-input" type="date"></input>
+			</div>
+			<div class="kb-task-toolbar">
+				<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play  tool-btn"></span>
+				<div class="glyphicon glyphicon-eye-open  tool-btn color-pick-btn ">
+					<div class="color-picker">
+						<span class="color-option"></span>
+						<div class="color-option"></div>
+					</div>
+				</div>
+				<span class="glyphicon glyphicon-time  tool-btn"></span> <span class="glyphicon glyphicon-trash  tool-btn"></span>
+			</div>
 		</form>
 	</div>
+	<script id="card_template" type="text/html">
+	<div class="kb-task-title"><%=title%></div>
+	<div class="kb-task-content"><%=content%></div>
+	<div class="kb-task-toolbar">
+		<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play tool-btn"></span>
+		<div class="glyphicon glyphicon-eye-open color-pick-btn tool-btn">
+			<div class="color-picker">
+				<span class="color-option"></span>
+				<div class="color-option"></div>
+			</div>
+		</div>
+		<span class="glyphicon glyphicon-time tool-btn"></span> <span class="glyphicon glyphicon-trash tool-btn"></span>
+</div>
+	</script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="http://cdn.bootcss.com/underscore.js/1.6.0/underscore-min.js"></script>
 	<script src="http://cdn.bootcss.com/backbone.js/1.1.0/backbone-min.js"></script>
-	<script src="/static/js/main.js"></script>
+	<script src="http://localhost:8000/static/lib/template.js"></script>
+	<script src="http://localhost:8000/static/js/main.js"></script>
 </body>
 </html>

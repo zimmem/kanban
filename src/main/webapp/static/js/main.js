@@ -23,9 +23,9 @@ $(function(){
 	
 	var TaskModel = Backbone.Model.extend({
 		initialize : function(){ 
-			
+			console.info(this);
 		},
-		event : {
+		events : {
 			'change' : 'onChange'
 		},
 		urlRoot : '/tasks',
@@ -38,6 +38,19 @@ $(function(){
 			if(!this.isNew()){
 				this.save();
 			}
+		}
+	});
+	
+	var TaskCard = Backbone.View.extend({
+		className : 'kb-task-card',
+		initialize : function(){
+			this.render();
+		},
+		render : function(){
+			if(!this.model){
+				throw 'model is null';
+			}
+			this.$el.html (template.render('card_template', this.model.toJSON()));
 		}
 	});
 	
@@ -111,6 +124,12 @@ $(function(){
 			var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 			this.$el.find('.date-input').val(today);
 			this.task = (option && option.task) || new TaskModel();
+			if(this.task.isNew()){
+				var task = this.task;
+				task.once('sync', function(){
+					waittingLane.addCard(new TaskCard({model:task}));
+				});
+			}
 			
 			ModeDialog.prototype.open.apply(this);
 		},
@@ -128,8 +147,15 @@ $(function(){
 	var createTaskDialog = new CreateTaskDialog({el:'#kb-create-controll'});
 	
 	var WaterFlowView = Backbone.View.extend({
-		initialize : function(){
-			this.cardWrapper = this.$el.find('.card-wrapper');
+		initialize : function(option){
+			
+			var url = option.tasksUrl;
+			var that = this;
+			$.get(url, function(data){
+				$.each(data, function(i, task){
+					that.addCard(new TaskCard({model:new TaskModel(task)}));
+				});
+			});
 			this.waterflow();
 			var that = this;
 			$(window).resize(function(){
@@ -145,6 +171,7 @@ $(function(){
 			
 		},
 		waterring : false,
+		waterInfo : {},
 		waterflow : function(){
 			
 			if(this.waterring){
@@ -155,30 +182,29 @@ $(function(){
 			
 			
 			
-			var clumnCount = parseInt(this.$el.width() / CARD_WIDTH );
-			var lastRowBottom = [0];
+			this.waterInfo.clumnCount = parseInt(this.$el.width() / CARD_WIDTH );
+			this.waterInfo.lastRowBottom = [];
 			
 			var that = this;
-			var maxHeight = 0;
+			this.waterInfo.maxHeight = 0;
 			
 			var cards = this.$el.find('.kb-task-card');
 			$.each(cards, function(i, card){
 				var $card = $(card);
-				if(i < clumnCount ){
+				if(i < that.waterInfo.clumnCount ){
 					//$card.offset({top : 0, left : i * $card.outerWidth(true)});
 					$card.css('-webkit-transform', 'translate('+ i * $card.outerWidth(true)+ 'px, 0px)');
-					lastRowBottom[i] = $card.outerHeight(true);
-					maxHeight = maxHeight > lastRowBottom[i] ? maxHeight : lastRowBottom[i]; 
+					that.waterInfo.lastRowBottom[i] = $card.outerHeight(true);
+					that.waterInfo.maxHeight = that.waterInfo.maxHeight > that.waterInfo.lastRowBottom[i] ? that.waterInfo.maxHeight : that.waterInfo.lastRowBottom[i]; 
 					
 				}else{
-					var shortestClumn = that.getShortestClumn(lastRowBottom);
+					var shortestClumn = that.getShortestClumn(that.waterInfo.lastRowBottom);
 					//$card.offset({top : lastRowBottom[shortestClumn], left : shortestClumn * $card.outerWidth(true)});
-					$card.css('-webkit-transform', 'translate('+ shortestClumn * $card.outerWidth(true) +'px, '+ lastRowBottom[shortestClumn] +'px)');
-					lastRowBottom[shortestClumn] += $card.outerHeight(true);
-					maxHeight = maxHeight > lastRowBottom[shortestClumn] ? maxHeight : lastRowBottom[shortestClumn]; 
+					$card.css('-webkit-transform', 'translate('+ shortestClumn * $card.outerWidth(true) +'px, '+ that.waterInfo.lastRowBottom[shortestClumn] +'px)');
+					that.waterInfo.lastRowBottom[shortestClumn] += $card.outerHeight(true);
+					that.waterInfo.maxHeight = that.waterInfo.maxHeight > that.waterInfo.lastRowBottom[shortestClumn] ? that.waterInfo.maxHeight : that.waterInfo.lastRowBottom[shortestClumn]; 
 				}
 			});
-			this.cardWrapper.height(maxHeight);
 			
 			this.waterring = false;
 		},
@@ -191,11 +217,15 @@ $(function(){
 				}
 			});
 			return shortestClumn;
+		},
+		addCard : function(card){
+			this.$el.append(card.$el);
+			this.waterflow();
 		}
 	}); 
 	
-	new WaterFlowView({el : '#waitting-lane'});
-	new WaterFlowView({el : '#processing-lane'});
+	var waittingLane = new WaterFlowView({el : '#waitting-lane', tasksUrl : '/tasks/current-waitting'});
+	var processingLane = new WaterFlowView({el : '#processing-lane', tasksUrl : '/tasks/current-processing'});
 	
 	$('#createbtn').click(function(){
 		createTaskDialog.open();

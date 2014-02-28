@@ -1,5 +1,6 @@
 package com.zimmem.kanban.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,35 +21,32 @@ public class TaskController {
 	private TaskRepository taskRepository;
 
 	@RequestMapping(method = RequestMethod.GET)
-	@ResponseBody
 	public Iterable<Task> all() {
 		return taskRepository.findAll();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@ResponseBody
 	public Task createTask(@RequestBody Task task) {
+		task.setCreateTime(new Date());
+		task.setStatus(Task.Status.waitting.name());
 		Task saved = taskRepository.save(task);
 		return saved;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	@ResponseBody
 	public Task updateTask(@RequestBody Task task) {
 		Task saved = taskRepository.save(task);
 		return saved;
 	}
 
 	@RequestMapping(value = "current-waitting", method = RequestMethod.GET)
-	@ResponseBody
 	public List<Task> currentWaitting() {
-		return null;
+		return taskRepository.findCurrentWaitting(new Date());
 	}
 
 	@RequestMapping(value = "current-processing", method = RequestMethod.GET)
-	@ResponseBody
 	public List<Task> currentProcessing() {
-		return null;
+		return taskRepository.findCurrentProcessing();
 	}
 
 }
