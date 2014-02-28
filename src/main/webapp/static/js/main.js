@@ -181,12 +181,15 @@ $(function(){
 			this.waterring = true;
 			
 			
-			
-			this.waterInfo.clumnCount = parseInt(this.$el.width() / CARD_WIDTH );
+			var clumnCount =  parseInt(this.$el.width() / CARD_WIDTH );
+			if(this.waterInfo.clumnCount === clumnCount){
+				return ;
+			}
+			this.waterInfo.clumnCount = clumnCount;
 			this.waterInfo.lastRowBottom = [];
+			this.waterInfo.maxHeight = 0;
 			
 			var that = this;
-			this.waterInfo.maxHeight = 0;
 			
 			var cards = this.$el.find('.kb-task-card');
 			$.each(cards, function(i, card){
