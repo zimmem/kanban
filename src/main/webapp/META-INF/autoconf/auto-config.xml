@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<group>
+		<property name="appengine.app.version" defaultValue="1.0" description="appengin版本"/>
+		<property name="appengine.app.name" description="appengin name"/>
+		<property name="log.level" defaultValue="WARN" description="appengin name"/>
+	</group>
+	<script>
+		<generate template="appengine-web.xml" destfile="WEB-INF/appengine-web.xml"/>
+		<generate template="logging.properties" destfile="WEB-INF/logging.properties" />
+	</script>
+</config>
