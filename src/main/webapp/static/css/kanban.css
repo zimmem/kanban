@@ -240,15 +240,20 @@ textarea {
 
 .color-picker {
 	position: absolute;
-	min-width: 150px;
+	min-width: 171px;
 	border: 1px solid #ccc;
 	background: #FFF;
 	top: -38px;
-	left: -30px;
+	left: -55px;
 	padding: 3px;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 	display: none;
 	font-size: 0px;
+	z-index: 10;
+}
+
+.color-picker .bg-white{
+	border: 1px solid #ccc;
 }
 
 .color-picker:after {
@@ -258,7 +263,7 @@ textarea {
 	height: 8px;
 	top: 23px;
 	content: ' ';
-	left: 34px;
+	left: 59px;
 	background: #fff;
 	-webkit-transform: rotate(45deg);
 	border-width: 0px 1px 1px 0px;
@@ -267,10 +272,10 @@ textarea {
 .color-pick-btn:hover:after {
 	position: absolute;
 	height: 50px;
-	width: 20px;
+	width: 40px;
 	content: close-quote;
-	/* border: 1px solid; */
 	bottom: 0px;
+	left: -10px;
 }
 
 .color-option {
@@ -279,8 +284,18 @@ textarea {
 	display: inline-block;
 	position: static;
 	margin: 2px;
-	background: rgb(238, 102, 102);
+	z-index: 10;
 }
+
+.color-option:hover{
+	border: 2px solid;
+}
+
+.color-option-selected{
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4KPCFET0NUWVBFIHN2ZyAgUFVCTElDICctLy9XM0MvL0RURCBTVkcgMS4xLy9FTicgICdodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQnPgo8c3ZnIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHk9IjBweCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgaGVpZ2h0PSIxMnB4IiB3aWR0aD0iMTJweCIgdmVyc2lvbj0iMS4xIiB4PSIwcHgiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTIgMTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyIDEyIj4KPHBhdGggZD0ibTQgMTEuNWMtMC4xMzEgMC0wLjI1OS0wLjA1Mi0wLjM1NC0wLjE0Ni0wLjEyOC0wLjEyOS0zLjE0Ni0zLjE4My0zLjE0Ni02LjM1NCAwLTAuMTg1IDAuMTAyLTAuMzU0IDAuMjY0LTAuNDQxIDAuMDc0LTAuMDM5IDAuMTU1LTAuMDU5IDAuMjM2LTAuMDU5IDAuMDk3IDAgMC4xOTQgMC4wMjggMC4yNzcgMC4wODRsMi41NzcgMS43MThjMC44NTUtMS4yOCAzLjU0NC00LjkxNyA3LjAyNS01Ljc4NyAwLjA0LTAuMDEgMC4wODEtMC4wMTUgMC4xMjEtMC4wMTUgMC4xNzEgMCAwLjMzMyAwLjA4NyAwLjQyNiAwLjIzNyAwLjExNCAwLjE4NSAwLjA5NiAwLjQyMy0wLjA0NiAwLjU4OC0wLjA2IDAuMDY5LTUuOTQ4IDYuOTYtNi45MDYgOS44MzMtMC4wNTUgMC4xNjQtMC4xOSAwLjI4OS0wLjM1OSAwLjMyOC0wLjAzOCAwLjAxLTAuMDc3IDAuMDE0LTAuMTE1IDAuMDE0eiIvPgo8cGF0aCBkPSJtMTEgMXMtNiA3LTcgMTAtMy0zLTMtNmwzIDJzMy01IDctNm0wLTFjLTAuMDggMC0wLjE2MiAwLjAxLTAuMjQyIDAuMDMtMy4zMTcgMC44MjktNS45MjUgNC4wMTYtNy4wMzYgNS41ODNsLTIuMTY3LTEuNDQ1Yy0wLjE2OC0wLjExMS0wLjM2MS0wLjE2OC0wLjU1NS0wLjE2OC0wLjE2MiAwLTAuMzI0IDAuMDM5LTAuNDcyIDAuMTE4LTAuMzI1IDAuMTc0LTAuNTI4IDAuNTEzLTAuNTI4IDAuODgyIDAgMy4zNzUgMy4xNTggNi41NzIgMy4yOTMgNi43MDcgMC4xODkgMC4xODkgMC40NDUgMC4yOTMgMC43MDcgMC4yOTMgMC4wNzcgMCAwLjE1My0wLjAwOSAwLjIzLTAuMDI2IDAuMzM3LTAuMDggMC42MDktMC4zMjkgMC43MTktMC42NTcgMC43Ny0yLjMwOSA1LjE3Ny03Ljc2IDYuODEtOS42NjYgMC4yODQtMC4zMzEgMC4zMi0wLjgwNiAwLjA5Mi0xLjE3Ny0wLjE4NS0wLjI5OS0wLjUxLTAuNDc0LTAuODUxLTAuNDc0eiIgZmlsbD0iI2ZmZiIvPgo8L3N2Zz4K) no-repeat 50% 50%;
+}
+
+
 
 .color-pick-btn:hover .color-picker {
 	display: block;
@@ -299,15 +314,13 @@ textarea {
 
 .kb-task-toolbar {
 	text-align: left;
-	padding: 5px 5px 5px 10px;
+	padding: 0px 5px 0px 8px;
 }
 
-.kb-task-toolbar  .tool-btn {
-	margin-left: 10px;
-}
 
 .kb-task-card .kb-task-toolbar {
 	visibility: hidden;
+	/* height: 30px; */
 }
 
 .kb-task-card:hover .kb-task-toolbar {
@@ -316,6 +329,7 @@ textarea {
 
 .kb-task-toolbar .tool-btn {
 	font-size: 16px;
+	margin-left: 10px;
 }
 
 .kb-task-toolbar .tool-btn:hover {
@@ -358,20 +372,22 @@ textarea {
 .kb-task-card {
 	font-size: 30px;
 	margin: 8px;
-	min-height: 150px;
+	/* min-height: 150px; */
 	background-color: #FFF;
 	width: 240px;
 	display: inline-block;
 	position: absolute;
 	top: 0;
 	left: 0;
-	-webkit-transition-duration: 0.218s;
+	-webkit-transition-duration: 0.5s;
 	text-align: left;
 }
 
 .kb-task-day {
 	font-size: 12px;
 	font-style: italic;
+	padding-left: 15px;
+	color: #777;
 }
 
 .culomn {
@@ -379,4 +395,36 @@ textarea {
 	margin: 8px;
 	float: left;
 	clear: none;
+}
+
+
+
+
+
+.bg-red{
+	background-color:rgb(245, 101, 69);
+}
+
+.bg-orange{
+	background-color:rgb(255, 187, 34);
+}
+
+.bg-yellow{
+	background-color:rgb(238, 238, 34);
+}
+
+.bg-green{
+	background-color:rgb(187, 229, 53);
+}
+
+.bg-teal{
+	background-color:rgb(119, 221, 187);
+}
+
+.bg-blue{
+	background-color:rgb(102, 204, 221);
+}
+
+.bg-gray{
+	background-color:rgb(181, 197, 197);
 }

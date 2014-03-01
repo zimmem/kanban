@@ -19,7 +19,7 @@ public class Task implements Serializable {
 	private static final long serialVersionUID = -6320533212515270759L;
 	
 	public static enum Status{
-		waitting, processing, finished
+		waitting, processing, finished, deleted
 	}
 
 	@Id

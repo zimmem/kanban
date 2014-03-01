@@ -2,6 +2,18 @@ $(function(){
     
 	var CARD_WIDTH = 256;
 	
+
+	var COLOR = {
+		white : '#fff',
+		red : 'rgb(245, 101, 69)',
+		orange : 'rgb(255, 187, 34)',
+		yellow : 'rgb(238, 238, 34)',
+		green : 'rgb(187, 229, 53)',
+		teal : 'rgb(119, 221, 187)',
+		blue : 'rgb(102, 204, 221)',
+		gray : 'rgb(181, 197, 197)'
+	};
+	
 	$.fn.serializeObject = function()
 	{
 	    var o = {};
@@ -32,11 +44,6 @@ $(function(){
 			if(!attrs.title && !attrs.content){
 				return "task empty";
 			}
-		},
-		onChange : function(){
-			if(!this.isNew()){
-				this.save();
-			}
 		}
 	});
 	
@@ -45,11 +52,51 @@ $(function(){
 		initialize : function(){
 			this.render();
 		},
+		events : {
+			'click .tool-btn-delete' : 'deleteTask' ,
+			'click .tool-btn-process' : 'processTask',
+			'click .tool-btn-finish' : 'finishTask',
+			'click .color-option' : 'changeBackgoundColor'
+		},
 		render : function(){
 			if(!this.model){
 				throw 'model is null';
 			}
-			this.$el.html (template.render('card_template', this.model.toJSON()));
+			this.$el.html (template.render('card_template', {task:this.model.toJSON(), COLOR : COLOR}));
+			this.$el.css({'background-color':COLOR[this.model.get('backgroundColor')]});
+			return this;
+		},
+		deleteTask : function(){
+			var that = this;
+			this.model.save({status:'deleted'}, {success : function(){
+				that.remove();
+				that.trigger('destroy');
+			}});
+		},
+		finishTask : function(){
+			var that = this;
+			this.model.save({status:'finished'}, {success : function(){
+				that.remove();
+				that.trigger('destroy');
+			}});
+		},
+		processTask : function(){
+			var that = this;
+			this.model.save({status:'processing'}, {success : function(){
+				debugger;
+				that.$el.appendTo(processingLane.$el);
+				waittingLane.waterflow(true);
+				processingLane.waterflow(true);
+			}});
+		},
+		changeBackgoundColor : function(e){
+			var that = this;
+			var color = $(e.target).data('color');
+			this.model.save({backgroundColor:color}, {success : function(){
+				that.$el.css({'background-color':COLOR[that.model.get('backgroundColor')]});
+				that.$el.find('.color-option-selected').removeClass('color-option-selected');
+				$(e.target).addClass('color-option-selected');
+			}});
 		}
 	});
 	
@@ -127,6 +174,7 @@ $(function(){
 				var task = this.task;
 				task.once('sync', function(){
 					waittingLane.addCard(new TaskCard({model:task}));
+					waittingLane.waterflow(true);
 				});
 			}
 			
@@ -206,6 +254,10 @@ $(function(){
 		},
 		addCard : function(card){
 			this.$el.append(card.$el);
+			this.listenTo(card, 'destroy', function(){
+				debugger;
+				this.waterflow(true);
+			});
 		}
 	}); 
 	
