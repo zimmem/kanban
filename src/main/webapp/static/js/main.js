@@ -83,7 +83,6 @@ $(function(){
 		processTask : function(){
 			var that = this;
 			this.model.save({status:'processing'}, {success : function(){
-				debugger;
 				that.$el.appendTo(processingLane.$el);
 				waittingLane.waterflow(true);
 				processingLane.waterflow(true);
@@ -102,8 +101,9 @@ $(function(){
 	
 	var MaskLayer = Backbone.View.extend({
 		className : 'mask',
-		initialize : function(){
-			this.$el.appendTo('body');
+		initialize : function(option){
+			var parent = (option && option.parent ) || $('body');
+			this.$el.appendTo(parent);
 		},
 		show : function(){
 			this.$el.show();
@@ -113,7 +113,6 @@ $(function(){
 		}
 	});
 	
-	var mask = new MaskLayer();
 	
 	var ModeDialog = Backbone.View.extend({
 		initialize : function(){
@@ -143,24 +142,30 @@ $(function(){
 	});
 	
 	
-	var CreateTaskDialog = ModeDialog.extend({
+	var CreateTaskDialog = Backbone.View.extend({
 		el:'#kb-create-controll',
 		
 		events : {
+			'focus .kb-task-title': 'active',
 			'keyup textarea' : 'onContentChange',
 			'change form' : 'onChange'
 		},
 		initialize : function(option){
-			ModeDialog.prototype.initialize.apply(this);
+			var that = this;
 			this.contentText = this.$el.find('textarea.kb-task-content');
 			this.contentClone = this.$el.find('div.kb-task-content');
 			this.form = this.$el.find('form');
+			this.titleInput = this.$el.find('.kb-task-title');
+			this.mask = new MaskLayer({parent:this.$el.parent()});
+			this.mask.$el.click(function(){
+				that.close();
+			});
 		},
 		onContentChange : function(e){
 			this.contentClone.text(this.contentText.val());
 			this.contentText.height( this.contentClone.height());
 		},
-		open : function(option){
+		active : function(option){
 			
 			this.form[0].reset();
 			this.onContentChange();
@@ -177,17 +182,22 @@ $(function(){
 					waittingLane.waterflow(true);
 				});
 			}
-			
-			ModeDialog.prototype.open.apply(this);
+			this.titleInput.prop('placeholder', 'Title');
+			this.$el.removeClass('inactive');
+			this.mask.show();
 		},
 		onChange : function(e){
 			var obj = this.form.serializeObject();
 			this.task.set(obj);
 		},
-		beforeClose : function(){
+		close : function(){
 			if(this.task.isNew()){
 				this.task.save();
 			}
+			this.form[0].reset();
+			this.titleInput.prop('placeholder', 'Add Task');
+			this.$el.addClass('inactive');
+			this.mask.hide();
 		}
 	});
 	
@@ -255,7 +265,6 @@ $(function(){
 		addCard : function(card){
 			this.$el.append(card.$el);
 			this.listenTo(card, 'destroy', function(){
-				debugger;
 				this.waterflow(true);
 			});
 		}
@@ -264,7 +273,4 @@ $(function(){
 	var waittingLane = new WaterFlowView({el : '#waitting-lane', tasksUrl : '/tasks/current-waitting'});
 	var processingLane = new WaterFlowView({el : '#processing-lane', tasksUrl : '/tasks/current-processing'});
 	
-	$('#createbtn').click(function(){
-		createTaskDialog.open();
-	});
 });

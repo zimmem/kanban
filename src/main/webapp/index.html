@@ -15,10 +15,34 @@
 				<ul class="nav navbar-nav hidden-xs">
 					<li class="active"><a href="#">Current</a></li>
 					<li class="active"><a href="#">All</a></li>
-					<li><a id="createbtn" href="javascript:void(0);">New</a></li>
 				</ul>
-			</div>
 
+			</div>
+			<div id="kb-create-controll" class="kb-create-controll inactive">
+				<form>
+					<div class="kb-create-controll-wrapper">
+						<input name="title" class="kb-task-title" placeholder="Add Task" autocomplete="off"></input>
+						<div class="kb-task-content-warpper dynamic">
+							<div id="task-content-clone" class="kb-task-content task-content-clone"></div>
+							<textarea name="content" class="kb-task-content" placeholder="content"></textarea>
+
+						</div>
+					</div>
+					<div class="time-picker-bar dynamic">
+						begin at <input name="beginTime" class="date-input" type="date"></input> and finish at <input name="deadline" class="date-input" type="date"></input>
+					</div>
+					<div class="kb-task-toolbar dynamic">
+						<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play  tool-btn"></span>
+						<div class="glyphicon glyphicon-eye-open  tool-btn color-pick-btn ">
+							<div class="color-picker">
+								<span class="color-option"></span>
+								<div class="color-option"></div>
+							</div>
+						</div>
+						<span class="glyphicon glyphicon-time  tool-btn"></span> <span class="glyphicon glyphicon-trash  tool-btn"></span>
+					</div>
+				</form>
+			</div>
 		</div>
 	</header>
 	<div class="task-board">
@@ -38,38 +62,13 @@
 
 		</table>
 	</div>
-	<div id="kb-create-controll" class="kb-create-controll">
-		<form>
-			<div class="kb-create-controll-wrapper">
-				<input name="title" class="kb-task-title" placeholder="Title"></input>
-				<div class="kb-task-content-warpper">
-					<div id="task-content-clone" class="kb-task-content task-content-clone"></div>
-					<textarea name="content" class="kb-task-content" placeholder="content"></textarea>
-
-				</div>
-			</div>
-			<div class="time-picker-bar">
-				begin at <input name="beginTime" class="date-input" type="date"></input> and finish at <input name="deadline" class="date-input" type="date"></input>
-			</div>
-			<div class="kb-task-toolbar">
-				<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play  tool-btn"></span>
-				<div class="glyphicon glyphicon-eye-open  tool-btn color-pick-btn ">
-					<div class="color-picker">
-						<span class="color-option"></span>
-						<div class="color-option"></div>
-					</div>
-				</div>
-				<span class="glyphicon glyphicon-time  tool-btn"></span> <span class="glyphicon glyphicon-trash  tool-btn"></span>
-			</div>
-		</form>
-	</div>
 	<script id="card_template" type="text/html">
 	<div class="kb-task-title"><%=task.title%></div>
 	<div class="kb-task-content"><%=task.content%></div>
 	<div class="kb-task-day"><%=task.beginTime%> ~ <%=task.deadline%></div>
 	<div class="kb-task-toolbar">
-		<span class="glyphicon glyphicon-ok tool-btn tool-btn-finish"></span>
-		<span class="glyphicon glyphicon-play tool-btn tool-btn-process"></span>
+		<span class="glyphicon glyphicon-ok tool-btn tool-btn-finish" title="finish"></span>
+		<span class="glyphicon glyphicon-play tool-btn tool-btn-process" title="process"></span>
 		<div class="glyphicon glyphicon-eye-open color-pick-btn tool-btn">
 			<div class="color-picker">
 				<% var colors = ['white', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'gray'];
@@ -79,7 +78,7 @@
 				<%}%>
 			</div>
 		</div>
-		 <span class="glyphicon glyphicon-trash tool-btn tool-btn-delete"></span>
+		 <span class="glyphicon glyphicon-trash tool-btn tool-btn-delete" title="delete"></span>
 	</div>
 	
 	</script>
