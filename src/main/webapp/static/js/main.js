@@ -23,7 +23,6 @@ $(function(){
 	
 	var TaskModel = Backbone.Model.extend({
 		initialize : function(){ 
-			console.info(this);
 		},
 		events : {
 			'change' : 'onChange'
@@ -169,7 +168,6 @@ $(function(){
 		waterflow : function(force){
 			
 			var clumnCount =  parseInt(this.$el.width() / CARD_WIDTH );
-			//console.info(this.$el.attr('id') + ' ' + this.waterInfo.id + ' ' + this.waterInfo.clumnCount + ' ' + clumnCount);
 			if(!force && this.waterInfo.clumnCount === clumnCount){
 				return ;
 			}
