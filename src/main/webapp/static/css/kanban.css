@@ -155,12 +155,11 @@ textarea {
 
 .kb-create-controll {
 	width: 600px;
-	background-color: #FFF;
 	padding: 2px;
-	position: absolute;
-	left: 267px;
-	box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 15px 0px;
+	position: relative;
+	/* left: 216px; */
 	z-index: 10001;
+	float: left;
 }
 
 
@@ -210,7 +209,19 @@ textarea {
 	width: 240px;
 }
 
+
+
 .kb-create-controll-wrapper {
+	background:#FFF;
+	position: absolute;
+	box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 15px 0px;
+}
+
+.kb-create-controll.inactive .kb-create-controll-wrapper {
+	box-shadow:none;
+}
+
+.kb-create-controll-content-wrapper {
 	max-height: 400px;
 	overflow-y: auto;
 	overflow-x: hidden;
