@@ -162,6 +162,12 @@ textarea {
 	float: left;
 }
 
+.kb-edit-dialog {
+	width: 600px;
+	padding: 2px;
+	background: #FFF;
+}
+
 
 .kb-create-controll.inactive{
 	background: transparent;
@@ -179,7 +185,7 @@ textarea {
 	margin: 2px;
 }
 
-.kb-create-controll input,.kb-create-controll textarea {
+.kb-create-controll input,.kb-create-controll textarea,.kb-edit-dialog input,.kb-edit-dialog textarea {
 	border-width: 0;
 	display: inline-block;;
 	margin: 0px;

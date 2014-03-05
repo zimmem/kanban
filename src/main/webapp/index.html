@@ -64,6 +64,31 @@
 
 		</table>
 	</div>
+	<div id="taskEditDialog" class="mode-dialog kb-edit-dialog" style="display: none;">
+		<form>
+				<div class="kb-create-controll-content-wrapper">
+					<input name="title" class="kb-task-title" placeholder="Add Task" autocomplete="off"></input>
+					<div class="kb-task-content-warpper">
+						<div id="task-content-clone" class="kb-task-content task-content-clone"></div>
+						<textarea name="content" class="kb-task-content" placeholder="content"></textarea>
+
+					</div>
+				</div>
+				<div class="time-picker-bar">
+					begin at <input name="beginTime" class="date-input" type="date"></input> and finish at <input name="deadline" class="date-input" type="date"></input>
+				</div>
+				<div class="kb-task-toolbar">
+					<span class="glyphicon glyphicon-ok tool-btn"></span> <span class="glyphicon glyphicon-play  tool-btn"></span>
+					<div class="glyphicon glyphicon-eye-open  tool-btn color-pick-btn ">
+						<div class="color-picker">
+							<span class="color-option"></span>
+							<div class="color-option"></div>
+						</div>
+					</div>
+					<span class="glyphicon glyphicon-time  tool-btn"></span> <span class="glyphicon glyphicon-trash  tool-btn"></span>
+				</div>
+			</form>
+	</div>
 	<script id="card_template" type="text/html">
 	<div class="kb-task-title"><%=task.title%></div>
 	<div class="kb-task-content"><%=task.content%></div>
@@ -75,16 +100,17 @@
 			<div class="color-picker">
 				<% var colors = ['white', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'gray'];
 					for(var i = 0 ; i < colors.length ; i ++ ){
+						var color = task.backgroundColor || 'white';
 				%>
-				<span class="color-option bg-<%=colors[i]%> <% if(colors[i] == task.backgroundColor ){%>color-option-selected<%}%>" data-color="<%=colors[i]%>"></span>
+				<span class="color-option bg-<%=colors[i]%> <% if(colors[i] == color ){%>color-option-selected<%}%>" data-color="<%=colors[i]%>"></span>
 				<%}%>
 			</div>
 		</div>
 		 <span class="glyphicon glyphicon-trash tool-btn tool-btn-delete" title="delete"></span>
 	</div>
-	
 	</script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="http://cdn.bootcss.com/underscore.js/1.6.0/underscore-min.js"></script>
 	<script src="http://cdn.bootcss.com/backbone.js/1.1.0/backbone-min.js"></script>
 	<script src="/static/lib/template.js"></script>

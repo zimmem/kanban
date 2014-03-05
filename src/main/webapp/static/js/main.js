@@ -51,12 +51,17 @@ $(function(){
 		className : 'kb-task-card',
 		initialize : function(){
 			this.render();
+			this.listenTo(this.model, 'updated', this.onContentChange);
 		},
 		events : {
 			'click .tool-btn-delete' : 'deleteTask' ,
 			'click .tool-btn-process' : 'processTask',
 			'click .tool-btn-finish' : 'finishTask',
-			'click .color-option' : 'changeBackgoundColor'
+			'click .color-option' : 'changeBackgoundColor',
+			'click': 'openEditDialog',
+			'click .kb-task-toolbar' : function(){
+				return false;
+			} 
 		},
 		render : function(){
 			if(!this.model){
@@ -96,11 +101,21 @@ $(function(){
 				that.$el.find('.color-option-selected').removeClass('color-option-selected');
 				$(e.target).addClass('color-option-selected');
 			}});
+		},
+		openEditDialog : function(){
+			editTaskDialog.open(this.model);
+		},
+		onContentChange : function(){
+			this.render();
+			this.trigger('change');
 		}
 	});
 	
 	var MaskLayer = Backbone.View.extend({
 		className : 'mask',
+		events:{
+			'click':function(){this.trigger('click');}
+		},
 		initialize : function(option){
 			var parent = (option && option.parent ) || $('body');
 			this.$el.appendTo(parent);
@@ -112,6 +127,8 @@ $(function(){
 			this.$el.hide();
 		}
 	});
+	
+	var mask = new MaskLayer();
 	
 	
 	var ModeDialog = Backbone.View.extend({
@@ -129,6 +146,7 @@ $(function(){
 			this.$el.css({left : left});
 			mask.show();
 			this.$el.show();
+			this.listenToOnce(mask, 'click', this.close);
 		},
 		close : function(){
 			
@@ -140,6 +158,8 @@ $(function(){
 			mask.hide();
 		}
 	});
+	
+	
 	
 	
 	var CreateTaskDialog = Backbone.View.extend({
@@ -202,6 +222,55 @@ $(function(){
 	});
 	
 	var createTaskDialog = new CreateTaskDialog({el:'#kb-create-controll'});
+	
+	
+	var EditTaskDialog = ModeDialog.extend({
+		el : '#taskEditDialog',
+		initialize : function(){
+			this.contentText = this.$el.find('textarea.kb-task-content');
+			this.contentClone = this.$el.find('div.kb-task-content');
+			this.form = this.$el.find('form');
+		},
+		events : {
+			'keyup textarea' : 'onContentChange',
+		},
+		open : function(task){
+			this.model = task;
+			this.render(task);
+			ModeDialog.prototype.open.apply(this);
+			this.onContentChange();
+		},
+		render : function(task){
+			$.each(this.$el.find('input'), function(i, o){
+				var input = $(o);
+				input.val(task.get(input.prop('name')));
+			});
+			$.each(this.$el.find('textarea'), function(i, o){
+				var input = $(o);
+				input.val(task.get(input.prop('name')));
+			});
+			this.$el.css({'background-color':COLOR[task.get('backgroundColor')]});
+			
+			return this;
+		},
+		onContentChange : function(){
+			this.contentClone.text(this.contentText.val());
+			this.contentText.height( this.contentClone.height());
+		},
+		close : function(){
+			var obj = this.form.serializeObject();
+			var task = this.model;
+			this.model.save(obj, {success:function(){
+				task.trigger('updated');
+			}});
+			ModeDialog.prototype.close.apply(this);
+		},
+		cancel : function(){
+			ModeDialog.prototype.close.apply(this);
+		}
+	});
+	
+	var editTaskDialog = new EditTaskDialog();
 				
 	var WaterFlowView = Backbone.View.extend({
 		initialize : function(option){
@@ -264,9 +333,14 @@ $(function(){
 		},
 		addCard : function(card){
 			this.$el.append(card.$el);
-			this.listenTo(card, 'destroy', function(){
-				this.waterflow(true);
+			var that = this;
+			this.listenToOnce(card, 'destroy', function(){
+				that.waterflow(true);
+				that.stopListening(card);
 			});
+			this.listenTo(card, 'change', function(){
+				that.waterflow(true);
+			})
 		}
 	}); 
 	
