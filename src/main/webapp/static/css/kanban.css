@@ -426,6 +426,9 @@ textarea {
 	font-style: italic;
 	padding-left: 15px;
 	color: #777;
+	padding: 10px 0 10px 0;
+	margin: 0 15px 0 15px;
+	border-top: rgba(0,0,0,0.1) 2px dotted;
 }
 
 .culomn {

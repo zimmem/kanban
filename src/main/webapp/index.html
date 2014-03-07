@@ -92,7 +92,6 @@
 	<script id="card_template" type="text/html">
 	<div class="kb-task-title"><%=task.title%></div>
 	<div class="kb-task-content"><%=task.content%></div>
-	<div class="kb-task-day"><%=task.beginTime%> ~ <%=task.deadline%></div>
 	<div class="kb-task-toolbar">
 		<span class="glyphicon glyphicon-ok tool-btn tool-btn-finish" title="finish"></span>
 		<span class="glyphicon glyphicon-play tool-btn tool-btn-process" title="process"></span>
@@ -108,6 +107,7 @@
 		</div>
 		 <span class="glyphicon glyphicon-trash tool-btn tool-btn-delete" title="delete"></span>
 	</div>
+	<div class="kb-task-day"><%=task.beginTime%> ~ <%=task.deadline%></div>
 	</script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
